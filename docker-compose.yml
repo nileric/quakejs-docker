@@ -1,0 +1,18 @@
+version: '3'
+services:
+  quakejs:
+    image: treyyoder/quakejs:latest
+    restart: always
+    ports:
+      - '8080:80'
+    networks:
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.q3js-fedfd3.rule=Host(`q3js.umpabob.ru`)
+      - traefik.http.routers.q3js-fedfd3.entrypoints=websecure
+      - traefik.http.routers.q3js-fedfd3.tls.certResolver=letsencrypt
+      - traefik.http.services.q3js-fedfd3.loadbalancer.server.port=8080
+networks:
+  dokploy-network:
+    external: true
